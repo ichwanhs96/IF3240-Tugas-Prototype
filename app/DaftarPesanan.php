@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Eloquent\Model;
 
-class daftar_pesanan extends Model {
+class DaftarPesanan extends Model {
 
 	//
 
