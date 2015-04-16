@@ -28,3 +28,9 @@ Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
+
+//manager's route
+Route::get('/manager', 'ManagerController@home');
+Route::post('/manager/login', 'ManagerController@login');
+Route::get('/manager/logout', 'ManagerController@logout');
+Route::get('/manager/edit_menu_makanan', 'ManagerController@getMenu');
