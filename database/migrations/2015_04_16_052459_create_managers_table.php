@@ -18,6 +18,7 @@ class CreateManagersTable extends Migration {
 			$table->string('username');
 			$table->string('password');
 			$table->string('nama');
+			$table->timestamps();
 		});
 	}
 

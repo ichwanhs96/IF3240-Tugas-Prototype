@@ -1,5 +1,6 @@
 <?php
 
+use App\Pesanan;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
@@ -17,7 +18,12 @@ class CreatePesanansTable extends Migration {
 			$table->increments('id_pesanan');
 			$table->integer('status');
 			$table->dateTime('tanggal');
-			});
+			$table->timestamps();
+		});
+
+		$pesanan = new Pesanan;
+		$pesanan->status = 0;
+		$pesanan->save();
 	}
 
 	/**
