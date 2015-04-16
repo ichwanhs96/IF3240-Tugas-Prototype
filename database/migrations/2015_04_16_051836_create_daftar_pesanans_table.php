@@ -15,21 +15,21 @@ class CreateDaftarPesanansTable extends Migration {
 	{
 		Schema::create('daftar_pesanans', function(Blueprint $table)
 		{
-			$table->integer('id_pesanan');
-			$table->integer('id_menu');
+			$table->integer('pesanan_id');
+			$table->integer('menu_id');
 			$table->integer('jumlah');
 			$table->timestamps();
 		});
 
 		$daftar = new DaftarPesanan();
-		$daftar->id_pesanan = 1;
-		$daftar->id_menu = 1;
+		$daftar->pesanan_id = 1;
+		$daftar->menu_id = 1;
 		$daftar->jumlah = 2;
 		$daftar->save();
 
 		$daftar = new DaftarPesanan();
-		$daftar->id_pesanan = 1;
-		$daftar->id_menu = 2;
+		$daftar->pesanan_id = 1;
+		$daftar->menu_id = 2;
 		$daftar->jumlah = 1;
 		$daftar->save();
 	}

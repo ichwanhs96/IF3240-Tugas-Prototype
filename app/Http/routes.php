@@ -18,6 +18,11 @@ Route::get('home', 'HomeController@index');
 Route::get('/kasir', 'KasirController@home');
 
 Route::get('/kasir/pesanan/{id}', 'KasirController@pesanan');
+//Settings: create a new setting
+Route::post( '/kasir/pesanan/{id}/add', array(
+    'as' => 'pesanan.add',
+    'uses' => 'KasirController@addPesanan'
+) );
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
