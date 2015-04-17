@@ -28,18 +28,71 @@ class ManagerController extends Controller {
 
 		if($manager != null){
 			Session::set('manager', $manager);
-			return redirect('/manager');
+			return Redirect::route('manager.home');
 		}
-		else return redirect('/manager');
+		else return Redirect::route('manager.home');
 	}
 
 	public function logout(){
 		Session::forget('manager');
-		return redirect('/manager');
+		return Redirect::route('manager.home');
 	}
 
 	public function getMenu(){
 		$menus = Menu::all();
-		return view('manager.edit_menu_makanan', compact('menus', $menus));
+		return view('manager.list_menu_makanan', compact('menus', $menus));
+	}
+
+	public function editMenu($id){
+		$menu = Menu::where('id', $id)->first();
+		return view('manager.edit_menu_makanan', compact('menu', $menu));
+	}
+
+	public function tambahMenu(){
+		return view('manager.tambah_menu_makanan');
+	}
+
+	public function updateMenu(){
+		$input = Request::all();
+
+		if($input['id'] != -1){
+			$menu = Menu::where('id', $input['id'])->first();
+			$menu->nama = $input['nama'];
+			$menu->harga = $input['harga'];
+			$menu->jenis = $input['jenis'];
+			$menu->save();
+		} else {
+			$menu = new Menu();
+			$menu->nama = $input['nama'];
+			$menu->jenis = $input['jenis'];
+			$menu->harga = $input['harga'];
+			$menu->save();
+		}
+		return Redirect::route('manager.list_menu_makanan');
+	}
+
+	public function generateLaporan(){
+		$input = Request::all();
+		$pesanans = Pesanan::whereBetween('tanggal', array($input['tanggal_awal'], $input['tanggal_akhir']))->get();
+		$menus = Menu::all();
+		$daftarPesanans = DaftarPesanan::all();
+		$laporans =[[]];
+		$count = 0;
+
+		foreach ($menus as $menu) {
+			foreach ($daftarPesanans as $daftarPesanan) {
+				foreach ($pesanans as $pesanan) {
+					if($daftarPesanan->pesanan_id == $pesanan->id){
+						if($daftarPesanan->menu_id == $menu->id){
+							$count += $daftarPesanan->jumlah;
+						}
+					}
+				}
+			}
+			array_push($laporans, ['id' => $menu->id, 'jumlah' => $count]);
+			$count = 0;
+		}
+
+		return view('manager.hasil_laporan', compact('laporans', 'menus', 'pesanans', 'daftarPesanans'));
 	}
 }

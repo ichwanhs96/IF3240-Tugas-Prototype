@@ -30,7 +30,45 @@ Route::controllers([
 ]);
 
 //manager's route
-Route::get('/manager', 'ManagerController@home');
-Route::post('/manager/login', 'ManagerController@login');
-Route::get('/manager/logout', 'ManagerController@logout');
-Route::get('/manager/edit_menu_makanan', 'ManagerController@getMenu');
+Route::get('/manager', array(
+	'as' =>'manager.home',
+	'uses' =>'ManagerController@home')
+	);
+Route::post('/manager/login', array(
+	'as' => 'manager.login',
+	'uses' => 'ManagerController@login')
+	);
+Route::get('/manager/logout', array(
+	'as' => 'manager.logout',
+	'uses' => 'ManagerController@logout')
+	);
+Route::get('/manager/edit_menu_makanan', array(
+	'as' => 'manager.list_menu_makanan',
+	'uses' => 'ManagerController@getMenu')
+	);
+Route::get('/manager/edit_menu_makanan/{id}', array(
+	'as' => 'manager.editMenu',
+	'uses' => 'ManagerController@editMenu')
+	);
+
+Route::get('/manager/tambah_menu_makanan', array(
+	'as' => 'manager.tambahMenu',
+	'uses' => 'ManagerController@tambahMenu')
+	);
+
+Route::post('/manager/update_menu_makanan', array(
+	'as' => 'manager.updateMenu',
+	'uses' => 'ManagerController@updateMenu')
+	);
+
+Route::get('/manager/laporan', array(
+	'as' => 'manager.laporan',
+	'uses' => function(){
+		return view('manager.laporan');
+	})
+	);
+
+Route::post('/manager/generate_laporan', array(
+	'as' => 'manager.generateLaporan',
+	'uses' => 'ManagerController@generateLaporan')
+	);
